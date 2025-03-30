@@ -4,7 +4,7 @@
 
 using namespace std;
 
-// Superclass: PessoaZ
+// Superclass: Pessoa
 class Pessoa {
 protected:
     string name; // Nome da pessoa
