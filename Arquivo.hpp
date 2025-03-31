@@ -1,25 +1,21 @@
 #ifndef ARQUIVO_HPP
 #define ARQUIVO_HPP
 
-#include <fstream>
 #include <string>
+using std::string;
 
-// Classe responsável por manipular arquivos
+/**
+ * @brief Classe para manipulação de arquivos (salvar e exibir conteúdo).
+ */
 class Arquivo {
-private:
-    std::fstream arquivo; // Objeto para manipulação de arquivos
-
 public:
-    // Método para gravar texto em um arquivo
-    // Parâmetros:
-    // - texto: conteúdo a ser gravado no arquivo
-    // - nomeArquivo: nome do arquivo onde o texto será salvo
-    void arquivar(const std::string& texto, const std::string& nomeArquivo);
+    Arquivo(); // Construtor
 
-    // Método para exibir o conteúdo de um arquivo no console
-    // Parâmetro:
-    // - nomeArquivo: nome do arquivo cujo conteúdo será exibido
-    void mostrararq(const std::string& nomeArquivo);
+    // Salva o conteúdo informado em um arquivo com o nome especificado.
+    void salvarConteudo(const string& conteudo, const string& nomeArquivo) const;
+
+    // Exibe o conteúdo do arquivo especificado.
+    void exibirConteudo(const string& nomeArquivo) const;
 };
 
 #endif // ARQUIVO_HPP

@@ -1,43 +1,33 @@
 #include "Arquivo.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
 
-// Método para salvar texto em um arquivo
-void Arquivo::salvarTextoEmArquivo(const std::string& texto, const std::string& nomeDoArquivo) {
-    // Abre o arquivo no modo de saída (escrita)
-    arquivo.open(nomeDoArquivo, std::ios::out);
+// Construtor padrão.
+Arquivo::Arquivo() {}
 
-    // Verifica se o arquivo foi aberto com sucesso
-    if (arquivo.is_open()) {
-        // Escreve o texto no arquivo e adiciona uma nova linha
-        arquivo << texto << "\n";
-
-        // Fecha o arquivo após a escrita
-        arquivo.close();
+// Salva o conteúdo no arquivo indicado.
+void Arquivo::salvarConteudo(const string& conteudo, const string& nomeArquivo) const {
+    std::ofstream arquivoSaida(nomeArquivo);
+    if (arquivoSaida.is_open()) {
+        arquivoSaida << conteudo << "\n";
+        arquivoSaida.close();
     } else {
-        // Exibe uma mensagem de erro caso o arquivo não possa ser aberto
-        std::cout << "Erro ao abrir o arquivo para escrita!" << std::endl;
+        std::cout << "Erro ao abrir o arquivo para escrita." << std::endl;
     }
 }
 
-// Método para exibir o conteúdo de um arquivo no console
-void Arquivo::exibirConteudoDoArquivo(const std::string& nomeDoArquivo) {
-    // Abre o arquivo no modo de entrada (leitura)
-    arquivo.open(nomeDoArquivo, std::ios::in);
-
-    // Verifica se o arquivo foi aberto com sucesso
-    if (arquivo.is_open()) {
-        std::string linha;
-
-        // Lê o arquivo linha por linha e exibe no console
-        while (std::getline(arquivo, linha)) {
+// Exibe o conteúdo do arquivo indicado.
+void Arquivo::exibirConteudo(const string& nomeArquivo) const {
+    std::ifstream arquivoEntrada(nomeArquivo);
+    std::string linha;
+    std::cout << "Conteúdo do arquivo:\n";
+    if (arquivoEntrada.is_open()) {
+        while (std::getline(arquivoEntrada, linha)) {
             std::cout << linha << std::endl;
         }
-
-        // Fecha o arquivo após a leitura
-        arquivo.close();
+        arquivoEntrada.close();
     } else {
-        // Exibe uma mensagem de erro caso o arquivo não possa ser aberto
-        std::cout << "Erro ao abrir o arquivo para leitura!" << std::endl;
+        std::cout << "Não foi possível abrir o arquivo." << std::endl;
     }
 }

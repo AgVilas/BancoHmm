@@ -1,40 +1,39 @@
 #include "Funcionario.hpp"
 #include <iostream>
+#include <string>
 
-// Construtor da classe Funcionario
-// Inicializa os atributos da classe base Pessoa e os atributos específicos de Funcionario
-Funcionario::Funcionario(std::string nome, int idade, std::string sexo, 
-                         int salarioFuncionario, std::string numeroFuncionario)
-    : Pessoa(nome, idade, sexo), salario(salarioFuncionario), numero(numeroFuncionario) {}
+// Construtor da classe Funcionario.
+Funcionario::Funcionario(const string& nomeCompleto, int idade, const string& genero, int salario, const string& identificacao)
+    : Pessoa(nomeCompleto, idade, genero), salario(salario), identificacao(identificacao) {}
 
-// Getter para o atributo salario
-int Funcionario::getSalario() { 
-    return salario; 
+// Retorna o salário do funcionário.
+int Funcionario::getSalario() const {
+    return salario;
 }
 
-// Setter para o atributo salario
-void Funcionario::setSalario(int salarioFuncionario) { 
-    salario = salarioFuncionario; 
+// Define o salário do funcionário.
+void Funcionario::setSalario(int salario) {
+    this->salario = salario;
 }
 
-// Getter para o atributo numero
-std::string Funcionario::getNumero() { 
-    return numero; 
+// Retorna o número de identificação do funcionário.
+string Funcionario::getIdentificacao() const {
+    return identificacao;
 }
 
-// Setter para o atributo numero
-void Funcionario::setNumero(std::string numeroFuncionario) { 
-    numero = numeroFuncionario; 
+// Define o número de identificação do funcionário.
+void Funcionario::setIdentificacao(const string& identificacao) {
+    this->identificacao = identificacao;
 }
 
-// Método para consultar o salário atual do funcionário
-void Funcionario::consultarSalario() {
-    std::cout << "Salario atual: " << salario << std::endl;
+// Exibe o salário atual do funcionário.
+void Funcionario::exibirSalario() const {
+    std::cout << "Salário atual: " << salario << std::endl;
 }
 
-// Método para obter os detalhes do funcionário
-// Inclui informações sobre o salário, número do trabalhador e dados pessoais
-std::string Funcionario::getDetalhesFuncionario() {
-    return "Salario: " + std::to_string(salario) + "\nNumero do Trabalhador: " 
-           + numero + "\nDados Pessoais:\n" + getDetalhes1();
+// Obtém os detalhes do funcionário, incluindo dados pessoais.
+string Funcionario::obterDetalhes() const {
+    return "Salário: " + std::to_string(salario) +
+           "\nIdentificação: " + identificacao +
+           "\nDados Pessoais:\n" + Pessoa::obterDetalhes();
 }

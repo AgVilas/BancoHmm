@@ -1,46 +1,51 @@
-#include "Contacartao.hpp"
+#include "ContaCartao.hpp"
 #include <iostream>
+#include <string>
 
-// Construtor da classe Contacartao
-// Inicializa os atributos da classe, incluindo os herdados de Pessoa
-Contacartao::Contacartao(std::string nome, int idade, 
-                        std::string sexo, std::string tC)
-    : Pessoa(nome, idade, sexo), saldo(0), tipoConta(tC), emprestimo(0) {}
+// Construtor da classe ContaCartao.
+ContaCartao::ContaCartao(const string& nomeCompleto, int idade, const string& genero, const string& tipoConta)
+    : Pessoa(nomeCompleto, idade, genero), saldo(0), tipoConta(tipoConta), valorEmprestimo(0) {}
 
-// Retorna o saldo atual da conta
-int Contacartao::getSaldo() { 
-    return saldo; 
+// Retorna o saldo da conta.
+int ContaCartao::getSaldo() const {
+    return saldo;
 }
 
-// Retorna o tipo de conta
-std::string Contacartao::getTipoConta() { 
-    return tipoConta; 
+// Retorna o tipo da conta.
+string ContaCartao::getTipoConta() const {
+    return tipoConta;
 }
 
-// Realiza um depósito na conta
-void Contacartao::Depositar(int valor) {
+// Retorna o valor do empréstimo.
+int ContaCartao::getValorEmprestimo() const {
+    return valorEmprestimo;
+}
+
+// Realiza um depósito na conta.
+void ContaCartao::depositar(int valor) {
     saldo += valor;
-    std::cout << "Depósito feito com sucesso" << std::endl;
+    std::cout << "Depósito realizado com sucesso." << std::endl;
 }
 
-// Realiza um levantamento (saque) da conta
-void Contacartao::levantar(int valor) {
+// Realiza um levantamento (saque) se houver saldo suficiente.
+void ContaCartao::levantar(int valor) {
     if (saldo >= valor) {
         saldo -= valor;
-        std::cout << "Levantamento feito com sucesso" << std::endl;
+        std::cout << "Levantamento realizado com sucesso." << std::endl;
     } else {
-        std::cout << "Saldo insuficiente" << std::endl;
+        std::cout << "Saldo insuficiente, recarregue a conta." << std::endl;
     }
 }
 
-// Define o valor de empréstimo associado à conta
-void Contacartao::setFazerEmprestimo(int valor) { 
-    emprestimo = valor; 
+// Define o valor do empréstimo realizado.
+void ContaCartao::definirValorEmprestimo(int valor) {
+    valorEmprestimo = valor;
 }
 
-// Retorna os detalhes da conta e do cliente em formato de string
-std::string Contacartao::getDetalhes3() {
-    return "Informação do cliente:\nSaldo atual: " + std::to_string(saldo) 
-           + "\nTipo de conta: " + tipoConta + "\nValor da dívida: " 
-           + std::to_string(emprestimo) + "\nDados pessoais:\n" + getDetalhes1();
+// Retorna os detalhes da conta, combinando dados financeiros e pessoais.
+string ContaCartao::obterDetalhes() const {
+    return "Informações do Cliente:\nSaldo Atual: " + std::to_string(saldo) +
+           "\nTipo de Conta: " + tipoConta +
+           "\nValor do Empréstimo: " + std::to_string(valorEmprestimo) +
+           "\nDados Pessoais:\n" + Pessoa::obterDetalhes();
 }

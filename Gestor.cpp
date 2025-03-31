@@ -1,48 +1,47 @@
 #include "Gestor.hpp"
+#include <iostream>
+#include <string>
 
-// Construtor da classe Gestor
-// Inicializa os atributos herdados da classe Funcionario e os atributos específicos de Gestor
-Gestor::Gestor(std::string nome, int idade, std::string sexo, 
-               int s, std::string nu, std::string sd, std::string c, int nf)
-    : Funcionario(nome, idade, sexo, s, nu), // Chamada ao construtor da classe base
-      setor(sd), cargo(c), numFunciona(nf) {}
+// Construtor da classe Gestor.
+Gestor::Gestor(const string& nomeCompleto, int idade, const string& genero, int salario, const string& identificacao,
+               const string& setor, const string& cargo, int numeroFuncionariosGerenciados)
+    : Funcionario(nomeCompleto, idade, genero, salario, identificacao),
+      setor(setor), cargo(cargo), numeroFuncionariosGerenciados(numeroFuncionariosGerenciados) {}
 
-// Getter para o atributo 'setor'
-std::string Gestor::getSetor() { 
-    return setor; 
+// Retorna o setor de atuação do gestor.
+string Gestor::getSetor() const {
+    return setor;
 }
 
-// Setter para o atributo 'setor'
-void Gestor::setSetor(std::string st) { 
-    setor = st; 
+// Define o setor de atuação do gestor.
+void Gestor::setSetor(const string& setor) {
+    this->setor = setor;
 }
 
-// Getter para o atributo 'cargo'
-std::string Gestor::getCargo() { 
-    return cargo; 
+// Retorna o cargo do gestor.
+string Gestor::getCargo() const {
+    return cargo;
 }
 
-// Getter para o atributo 'numFunciona' (número de funcionários)
-int Gestor::getNumfunciona() { 
-    return numFunciona; 
+// Retorna o número de funcionários gerenciados.
+int Gestor::getNumeroFuncionariosGerenciados() const {
+    return numeroFuncionariosGerenciados;
 }
 
-// Setter para o atributo 'numFunciona'
-void Gestor::setNumfunciona(int nuf) { 
-    numFunciona = nuf; 
+// Define o número de funcionários gerenciados.
+void Gestor::setNumeroFuncionariosGerenciados(int numero) {
+    numeroFuncionariosGerenciados = numero;
 }
 
-// Método para autorizar empréstimos
-// Retorna true apenas se o tipo de conta for "Conta Corrente"
-bool Gestor::AutorizarEmprest(std::string tipo) {
-    return tipo == "Conta Corrente";
+// Autoriza empréstimo se a conta for do tipo "Conta Corrente".
+bool Gestor::autorizarEmprestimo(const string& tipoConta) const {
+    return tipoConta == "Conta Corrente";
 }
 
-// Método para obter os detalhes do gestor
-// Retorna uma string formatada com as informações do gestor
-std::string Gestor::getDetalhes() {
-    return "Informacao do Gestor:\nSetor: " + setor + 
-           "\nCargo: " + cargo + 
-           "\nFuncionarios: " + std::to_string(numFunciona) + 
-           "\nDados:\n" + getDetalhes2(); // Chama um método adicional (presumivelmente da classe base)
+// Retorna os detalhes do gestor.
+string Gestor::obterDetalhes() const {
+    return "Informações do Gestor:\nSetor: " + setor +
+           "\nCargo: " + cargo +
+           "\nNúmero de Funcionários Gerenciados: " + std::to_string(numeroFuncionariosGerenciados) +
+           "\nDados do Funcionário:\n" + Funcionario::obterDetalhes();
 }

@@ -1,37 +1,34 @@
 #include "Atendente.hpp"
 
-// Construtor da classe Atendente
-// Inicializa os atributos herdados de Funcionario e os atributos específicos de Atendente
-Atendente::Atendente(std::string nome, int idade, std::string genero, 
-                     int salario, std::string numeroUnico, int numeroBalcao, std::string categoriaAtendente)
-    : Funcionario(nome, idade, genero, salario, numeroUnico), // Chamada ao construtor da classe base
-      numeroDoBalcao(numeroBalcao), categoria(categoriaAtendente) {} // Inicialização dos atributos específicos
+// Construtor da classe Atendente.
+Atendente::Atendente(const string& nomeCompleto, int idade, const string& genero, int salario, const string& identificacao,
+                     int numeroBalcao, const string& categoriaAtendente)
+    : Funcionario(nomeCompleto, idade, genero, salario, identificacao),
+      numeroBalcao(numeroBalcao), categoriaAtendente(categoriaAtendente) {}
 
-// Getter para o número do balcão
-int Atendente::getNumeroDoBalcao() { 
-    return numeroDoBalcao; 
+// Retorna o número do balcão.
+int Atendente::getNumeroBalcao() const {
+    return numeroBalcao;
 }
 
-// Setter para o número do balcão
-void Atendente::setNumeroDoBalcao(int numeroBalcao) { 
-    numeroDoBalcao = numeroBalcao; 
+// Define o número do balcão.
+void Atendente::setNumeroBalcao(int numeroBalcao) {
+    this->numeroBalcao = numeroBalcao;
 }
 
-// Getter para a categoria do atendente
-std::string Atendente::getCategoria() { 
-    return categoria; 
+// Retorna a categoria do atendente.
+string Atendente::getCategoriaAtendente() const {
+    return categoriaAtendente;
 }
 
-// Método para abrir uma conta cartão
-// Cria e retorna um objeto Contacartao com os dados fornecidos
-Contacartao Atendente::abrirContaCartao(std::string nome, int idade, 
-                                        std::string genero, std::string tipoContaCartao) {
-    return Contacartao(nome, idade, genero, tipoContaCartao);
+// Cria e retorna uma nova ContaCartao para o cliente.
+ContaCartao Atendente::abrirConta(const string& nomeCompleto, int idade, const string& genero, const string& tipoConta) const {
+    return ContaCartao(nomeCompleto, idade, genero, tipoConta);
 }
 
-// Método para obter os detalhes do atendente
-// Retorna uma string com informações do atendente, incluindo balcão e categoria
-std::string Atendente::getDetalhesAtendente() {
-    return "Informacoes do Atendente:\nBalcao: " + std::to_string(numeroDoBalcao) 
-           + "\nCategoria: " + categoria + "\n" + getDetalhesFuncionario(); // getDetalhesFuncionario() é presumivelmente da classe base
+// Obtém os detalhes do atendente.
+string Atendente::obterDetalhes() const {
+    return "Informações do Atendente:\nNúmero do Balcão: " + std::to_string(numeroBalcao) +
+           "\nCategoria: " + categoriaAtendente +
+           "\nDados do Funcionário:\n" + Funcionario::obterDetalhes();
 }

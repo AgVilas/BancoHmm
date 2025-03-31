@@ -1,21 +1,42 @@
 #include "Pessoa.hpp"
 #include <string>
 
-// Constructor
-Pessoa::Pessoa(std::string nome, int idade, std::string sexo) 
-    : nome(nome), idade(idade), sexo(sexo) {}
+// Construtor da classe Pessoa.
+Pessoa::Pessoa(const string& nomeCompleto, int idade, const string& genero)
+    : nomeCompleto(nomeCompleto), idade(idade), genero(genero) {}
 
-// Getters
-std::string Pessoa::getName() { return nome; }
-int Pessoa::getIdade() { return idade; }
-std::string Pessoa::getSexo() { return sexo; }
+// Retorna o nome completo da pessoa.
+string Pessoa::getNomeCompleto() const {
+    return nomeCompleto;
+}
 
-// Setters
-void Pessoa::setName(std::string n) { nome = n; }
-void Pessoa::setIdade(int id) { idade = id; }
-void Pessoa::setSexo(std::string s) { sexo = s; }
+// Define o nome completo da pessoa.
+void Pessoa::setNomeCompleto(const string& nomeCompleto) {
+    this->nomeCompleto = nomeCompleto;
+}
 
-// Utility
-std::string Pessoa::getDetalhes1() {
-    return "nome: " + nome + "\nidade: " + std::to_string(idade) + "\nsexo: " + sexo;
+// Retorna a idade da pessoa.
+int Pessoa::getIdade() const {
+    return idade;
+}
+
+// Define a idade da pessoa.
+void Pessoa::setIdade(int idade) {
+    this->idade = idade;
+}
+
+// Retorna o gênero da pessoa.
+string Pessoa::getGenero() const {
+    return genero;
+}
+
+// Define o gênero da pessoa.
+void Pessoa::setGenero(const string& genero) {
+    this->genero = genero;
+}
+
+// Obtém os detalhes da pessoa em formato de string.
+string Pessoa::obterDetalhes() const {
+    return "Nome: " + nomeCompleto + "\nIdade: " + std::to_string(idade) +
+           "\nGênero: " + genero;
 }

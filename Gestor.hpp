@@ -2,34 +2,35 @@
 #define GESTOR_HPP
 
 #include "Funcionario.hpp"
+#include <string>
+using std::string;
 
-// Classe Gestor que herda da classe Funcionario
+/**
+ * @brief Classe que representa um gestor, derivada de Funcionario.
+ */
 class Gestor : public Funcionario {
 private:
-    // Atributos privados da classe Gestor
-    std::string setor;      // Setor do gestor
-    std::string cargo;      // Cargo do gestor
-    int numFunciona;        // Número de funcionários sob gestão
+    string setor;                      // Setor de atuação do gestor
+    string cargo;                      // Cargo do gestor
+    int numeroFuncionariosGerenciados; // Número de funcionários gerenciados
 
 public:
-    // Construtor da classe Gestor
-    Gestor(std::string nome, int idade, std::string sexo, 
-           int s, std::string nu, std::string sd, std::string c, int nf);
+    // Construtor que inicializa todos os atributos.
+    Gestor(const string& nomeCompleto, int idade, const string& genero, int salario, const string& identificacao,
+           const string& setor, const string& cargo, int numeroFuncionariosGerenciados);
 
-    // Métodos getters e setters para acessar e modificar os atributos
-    std::string getSetor();                // Retorna o setor do gestor
-    void setSetor(std::string st);         // Define o setor do gestor
+    // Métodos de acesso e modificação
+    string getSetor() const;
+    void setSetor(const string& setor);
+    string getCargo() const;
+    int getNumeroFuncionariosGerenciados() const;
+    void setNumeroFuncionariosGerenciados(int numero);
 
-    std::string getCargo();                // Retorna o cargo do gestor
+    // Autoriza empréstimo somente para contas do tipo "Conta Corrente".
+    bool autorizarEmprestimo(const string& tipoConta) const;
 
-    int getNumfunciona();                  // Retorna o número de funcionários sob gestão
-    void setNumfunciona(int nuf);          // Define o número de funcionários sob gestão
-
-    // Método para autorizar empréstimos
-    bool AutorizarEmprest(std::string tipo);
-
-    // Método para obter os detalhes do gestor
-    std::string getDetalhes();
+    // Retorna os detalhes do gestor, incluindo os dados do funcionário.
+    string obterDetalhes() const;
 };
 
-#endif
+#endif // GESTOR_HPP

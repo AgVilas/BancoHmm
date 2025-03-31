@@ -2,22 +2,31 @@
 #define PESSOA_HPP
 
 #include <string>
+using std::string;
 
+/**
+ * @brief Classe base que representa uma pessoa.
+ */
 class Pessoa {
 protected:
-    std::string nome;
-    int idade;
-    std::string sexo;
+    string nomeCompleto;  // Nome completo da pessoa
+    int idade;            // Idade da pessoa
+    string genero;        // Gênero da pessoa
 
 public:
-    Pessoa(std::string nome, int idade, std::string sexo);
-    std::string getName();
-    void setName(std::string n);
-    int getIdade();
-    void setIdade(int id);
-    std::string getSexo();
-    void setSexo(std::string s);
-    std::string getDetalhes1();
+    // Construtor com inicialização dos atributos.
+    Pessoa(const string& nomeCompleto, int idade, const string& genero);
+
+    // Métodos de acesso (getters) e modificação (setters)
+    string getNomeCompleto() const;
+    void setNomeCompleto(const string& nomeCompleto);
+    int getIdade() const;
+    void setIdade(int idade);
+    string getGenero() const;
+    void setGenero(const string& genero);
+
+    // Retorna os detalhes da pessoa formatados em string.
+    string obterDetalhes() const;
 };
 
-#endif
+#endif // PESSOA_HPP
