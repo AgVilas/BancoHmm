@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 // Superclasse Pessoa
 class Pessoa {
 protected:
@@ -309,6 +310,7 @@ public:
             Contacartao ct(elementos[1], stoi(elementos[2]), elementos[3], elementos[4]); // Exemplo
         } else {
             cout << "ID não encontrado." << endl;
+            Menu(); // Chama o menu novamente
         }
     }
 };
@@ -370,6 +372,8 @@ int main() {
     aq.arquivar(informaCliente, "infclient.txt");
     aq.arquivar(informaAtendente, "infatendent.txt");
     aq.arquivar(informaGestor, "infgesto.txt");
+    aq.arquivar(informaCliente, "infclient_RAW.txt");
+        
 
     return 0;
 }
