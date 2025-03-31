@@ -227,7 +227,7 @@ public:
     void arquivar(string texto, string nomeArquivo) {
         arquivo.open(nomeArquivo, ios::out);
         if (arquivo.is_open()) {
-            arquivo << t << "\n";
+            arquivo << texto << "\n";
             arquivo.close();
         } else {
             cout << "Erro ao abrir o arquivo para escrita." << endl;
