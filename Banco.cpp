@@ -223,8 +223,8 @@ public:
     Arquivo() {}
 
     // Método para arquivar informações
-    void arquivar(string t, string b) {
-        arquivo.open(b, ios::out);
+    void arquivar(string texto, string nomeArquivo) {
+        arquivo.open(nomeArquivo, ios::out);
         if (arquivo.is_open()) {
             arquivo << t << "\n";
             arquivo.close();
@@ -234,9 +234,9 @@ public:
     }
 
     // Método para mostrar informações do arquivo
-    void mostrararq(string b) {
+    void mostrararq(string nomeArquivo) {
         string linha;
-        arquivo.open(b, ios::in);
+        arquivo.open(nomeArquivo, ios::in);
         cout << "informacao do arquivo:\n";
         if (arquivo.is_open()) {
             while (getline(arquivo, linha)) {
