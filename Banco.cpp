@@ -1,30 +1,32 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
+#include <vector> // Adicionado para usar std::vector
 
 using namespace std;
 
 // Superclasse Pessoa
 class Pessoa {
 protected:
-    string name;  // Nome da pessoa
+    string nome;  // Nome da pessoa
     int idade;    // Idade da pessoa
     string sexo;  // Sexo da pessoa
 
 public:
     // Construtor da classe Pessoa
-    Pessoa(string n, int id, string s) {
-        name = n;
-        idade = id;
-        sexo = s;
+    Pessoa(string nome, int idade, string sexo) {
+        this->nome = nome;
+        this->idade = idade;
+        this->sexo = sexo;
     }
 
     // Métodos de acesso e modificação
     string getName() {
-        return name;
+        return nome; // Corrigido de "name" para "nome"
     }
     void setName(string n) {
-        name = n;
+        nome = n; // Corrigido de "name" para "nome"
     }
     int getIdade() {
         return idade;
@@ -41,7 +43,7 @@ public:
 
     // Método para obter os detalhes da pessoa
     string getDetalhes1() {
-        return "nome: " + name + "\nidade: " + to_string(idade) + "\nsexo: " + sexo;
+        return "nome: " + nome + "\nidade: " + to_string(idade) + "\nsexo: " + sexo; // Corrigido de "name" para "nome"
     }
 };
 
@@ -53,7 +55,7 @@ protected:
 
 public:
     // Construtor da classe Funcionario
-    Funcionario(string name, int idade, string sexo, int s, string nu) : Pessoa(name, idade, sexo) {
+    Funcionario(string nome, int idade, string sexo, int s, string nu) : Pessoa(nome, idade, sexo) {
         salario = s;
         numero = nu;
     }
@@ -74,7 +76,7 @@ public:
 
     // Método para consultar o salário
     void consultarS() {
-        cout << "Salario atual: " << getSalario();
+        cout << "Salario atual: " << getSalario() << endl;
     }
 
     // Método para obter os detalhes do funcionário
@@ -92,7 +94,7 @@ protected:
 
 public:
     // Construtor da classe Contacartao
-    Contacartao(string name, int idade, string sexo, string tC) : Pessoa(name, idade, sexo) {
+    Contacartao(string nome, int idade, string sexo, string tC) : Pessoa(nome, idade, sexo) {
         saldo = 0;
         tipoConta = tC;
         emprestimo = 0;
@@ -114,9 +116,9 @@ public:
 
     // Método para levantar dinheiro
     void levantar(int valor) {
-        if (saldo > valor) {
+        if (saldo >= valor) { // Corrigido para permitir levantamento igual ao saldo
             saldo -= valor;
-            cout << "levamento feito com sucesso" << endl;
+            cout << "levantamento feito com sucesso" << endl;
         } else {
             cout << "saldo insuficiente, recarregue a conta primeiro" << endl;
         }
@@ -142,7 +144,7 @@ private:
 
 public:
     // Construtor da classe Gestor
-    Gestor(string name, int idade, string sexo, int s, string nu, string sd, string c, int nf) : Funcionario(name, idade, sexo, s, nu) {
+    Gestor(string nome, int idade, string sexo, int s, string nu, string sd, string c, int nf) : Funcionario(nome, idade, sexo, s, nu) {
         setor = sd;
         cargo = c;
         numFunciona = nf;
@@ -167,7 +169,7 @@ public:
 
     // Método para autorizar empréstimo
     bool AutorizarEmprest(string tipo) {
-        return tipo == "Conta Corente";
+        return tipo == "Conta Corrente"; // Corrigido para "Conta Corrente"
     }
 
     // Método para obter os detalhes do gestor
@@ -184,7 +186,7 @@ private:
 
 public:
     // Construtor da classe Atendente
-    Atendente(string name, int idade, string sexo, int s, string nu, int nrb, string ct) : Funcionario(name, idade, sexo, s, nu) {
+    Atendente(string nome, int idade, string sexo, int s, string nu, int nrb, string ct) : Funcionario(nome, idade, sexo, s, nu) {
         nrbalcao = nrb;
         categoria = ct;
     }
@@ -201,8 +203,8 @@ public:
     }
 
     // Método para abrir uma conta
-    Contacartao abrirConta(string name, int idade, string sexo, string tipoc) {
-        return Contacartao(name, idade, sexo, tipoc);
+    Contacartao abrirConta(string nome, int idade, string sexo, string tipoc) {
+        return Contacartao(nome, idade, sexo, tipoc);
     }
 
     // Método para obter os detalhes do atendente
@@ -223,8 +225,12 @@ public:
     // Método para arquivar informações
     void arquivar(string t, string b) {
         arquivo.open(b, ios::out);
-        arquivo << t << "\n";
-        arquivo.close();
+        if (arquivo.is_open()) {
+            arquivo << t << "\n";
+            arquivo.close();
+        } else {
+            cout << "Erro ao abrir o arquivo para escrita." << endl;
+        }
     }
 
     // Método para mostrar informações do arquivo
@@ -238,7 +244,71 @@ public:
             }
             arquivo.close();
         } else {
-            cout << "nao foi possivel abrir o arquivo";
+            cout << "nao foi possivel abrir o arquivo" << endl;
+        }
+    }
+};
+
+// Classe Menu para interação com o usuário
+class Menu {
+public:
+    Menu() {
+        cout << "x================Menu===================x" << endl;
+        cout << "1-Entrar na Conta\n2-Criar Conta\n3-Sair" << endl;
+        cout << "x========================================x" << endl;
+        int opcao;
+        cin >> opcao;
+        switch (opcao) {
+            case 1:
+                cout << "Entrar na Conta" << endl;
+                break;
+            case 2:
+                cout << "Criar Conta" << endl;
+                break;
+            case 3:
+                cout << "Sair" << endl;
+                break;
+            default:
+                cout << "Opcao Invalida" << endl;
+        }
+    }
+
+    void entrar_naConta() {
+        string id, linha;
+        cout << "Digite o ID da conta: ";
+        cin >> id;
+
+        ifstream arquivo("infclient.txt");
+        bool encontrado = false;
+        vector<string> elementos;
+
+        if (arquivo.is_open()) {
+            while (getline(arquivo, linha)) {
+                stringstream ss(linha);
+                string item;
+                elementos.clear();
+
+                while (getline(ss, item, ',')) { // Supondo que os elementos estão separados por vírgulas
+                    elementos.push_back(item);
+                }
+
+                if (!elementos.empty() && elementos[0] == id) {
+                    encontrado = true;
+                    break;
+                }
+            }
+            arquivo.close();
+        } else {
+            cout << "Não foi possível abrir o arquivo." << endl;
+            return;
+        }
+
+        if (encontrado) {
+            cout << "ID encontrado. Criando objeto..." << endl;
+            // Aqui você pode criar o objeto com base nos dados encontrados
+            Contacartao ct(elementos[1], stoi(elementos[2]), elementos[3], elementos[4]); // Exemplo
+        } else {
+            cout << "ID não encontrado." << endl;
         }
     }
 };
@@ -251,11 +321,11 @@ int main() {
 
     // Criação de objetos
     Atendente at = Atendente("Mandinho", 30, "Masculino", 50000, "258+::", 156, "Area da economica");
-    Contacartao ct = at.abrirConta("Joao", 18, "Masculino", "Conta ponpanca");
+    Contacartao ct = at.abrirConta("Joao", 18, "Masculino", "Conta poupanca"); // Corrigido para "Conta poupanca"
     Gestor ge = Gestor("Saldina", 35, "Feminino", 70000, "258++::", "Atendimento", "Gestor da economia", 10);
 
     // Menu de opções
-    cout << "selecione uma opcao\n1-Saldo\n2-depositar dinheiro\n3-levantar dinheiro\n4-fazer emprestimo";
+    cout << "selecione uma opcao\n1-Saldo\n2-depositar dinheiro\n3-levantar dinheiro\n4-fazer emprestimo" << endl;
     cin >> op;
     cout << endl;
 
@@ -278,7 +348,7 @@ int main() {
             break;
         case 4:
             a = ge.AutorizarEmprest(ct.getTipoConta());
-            if (a == true) {
+            if (a) {
                 cout << "digite o valor de Emprestimo" << endl;
                 cin >> valor;
                 ct.setFazerEmprestimo(valor);
